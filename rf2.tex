@@ -1,0 +1,220 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Capítulo 31: Embaralhando Cartas}
+\author{Tradução de "Proofs from THE BOOK" por M. Aigner, G. M. Ziegler}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{figure}[h!]
+    \centering
+    % Placeholder for the image of the Ace of Spades card
+    \framebox[0.6\textwidth][c]{IMAGEM: Carta de Ás de Espadas com silhueta}
+    \caption{Cartão de visita de Persi Diaconis como mágico. Numa entrevista posterior ele disse: "Se você diz que é professor em Stanford as pessoas te tratam com respeito. Se você diz que inventa truques de mágica, eles não querem te apresentar à filha deles."}
+\end{figure}
+
+\section*{Introdução}
+
+Com que frequência se deve embaralhar um baralho de cartas até que ele esteja aleatório? [4] A análise de processos aleatórios é uma tarefa familiar na vida ("Quanto tempo leva para chegar ao aeroporto durante o horário de pico?") assim como na matemática. [5] É claro que, para obter respostas significativas a tais problemas, depende-se muito da formulação de perguntas significativas. [6] Para o problema de embaralhar cartas, isso significa que temos [7] que especificar o tamanho do baralho ($n=52$ cartas, digamos), [8] dizer como embaralhamos (analisaremos primeiro os embaralhamentos do tipo "top-in-at-random" e depois os mais realistas e eficazes "riffle shuffles"), e finalmente [9] explicar o que queremos dizer com "está aleatório" ou "está próximo do aleatório." [10]
+
+Portanto, nosso objetivo neste capítulo é uma análise do "riffle shuffle", devida a Edgar N. Gilbert e Claude Shannon (1955, não publicado) e Jim Reeds (1981, não publicado), seguindo o estatístico David Aldous e o ex-mágico que se tornou matemático Persi Diaconis, de acordo com [1]. [11] Não alcançaremos o resultado preciso final de que 7 "riffle shuffles" são suficientes para deixar um baralho de $n=52$ cartas muito próximo do aleatório, enquanto 6 "riffle shuffles" não são suficientes — mas obteremos um limite superior de 12, e veremos algumas ideias extremamente belas no caminho: os conceitos de regras de parada e de "tempo uniforme forte", o lema de que o tempo uniforme forte limita a distância de variação, o lema de inversão de Reeds e, assim, a interpretação do embaralhamento como "ordenação reversa". [12] No final, tudo será reduzido a dois problemas combinatórios muito clássicos, a saber, o do colecionador de cupons e o do paradoxo do aniversário. [13] Então vamos começar com estes! [14]
+
+\section{O paradoxo do aniversário}
+
+Pegue $n$ pessoas aleatórias — os participantes de uma aula ou seminário, digamos. [16] Qual é a probabilidade de que todas tenham aniversários diferentes? [17] Com as suposições simplificadoras usuais (365 dias por ano, sem efeitos sazonais, sem gêmeos presentes) a probabilidade é [18]
+$$ p(n) = \prod_{i=1}^{n-1} \left(1 - \frac{i}{365}\right), $$ [19]
+que é menor que $\frac{1}{2}$ para $n=23$ (este é o "paradoxo do aniversário"!), menos de 9 por cento para $n=42$, e exatamente 0 para $n > 365$ (o "princípio da casa dos pombos", veja o Capítulo 28). [33] A fórmula é fácil de ver se pegarmos as pessoas em alguma ordem fixa: Se as primeiras $i$ pessoas têm aniversários distintos, então a probabilidade de que a $(i+1)$-ésima pessoa não estrague a série é $1 - \frac{i}{365}$, uma vez que restam $365-i$ aniversários. [34] De forma semelhante, se $n$ bolas são colocadas de forma independente e aleatória em $K$ caixas, então a probabilidade de que nenhuma caixa receba mais de uma bola é [35]
+$$ p(n, K) = \prod_{i=1}^{n-1} \left(1 - \frac{i}{K}\right). $$ [36]
+
+\section{O colecionador de cupons}
+
+Crianças compram fotos de estrelas pop (ou de futebol) para seus álbuns, mas as compram em pequenos envelopes não transparentes, então não sabem qual foto receberão. [38] Se houver $n$ fotos diferentes, qual é o número esperado de fotos que uma criança precisa comprar até obter cada motivo pelo menos uma vez? [39] Equivalentemente, se você retira aleatoriamente bolas de uma urna que contém $n$ bolas distinguíveis, e se você coloca a bola de volta a cada vez e mistura bem novamente, quantas vezes, em média, você precisa retirar até ter retirado cada bola pelo menos uma vez? [40]
+
+Se você já retirou $k$ bolas distintas, a probabilidade de não obter uma nova na próxima retirada é $\frac{k}{n}$. [41] Portanto, a probabilidade de precisar de exatamente $s$ retiradas para a próxima bola nova é $\left(\frac{k}{n}\right)^{s-1}\left(1-\frac{k}{n}\right)$. [42] E assim, o número esperado de retiradas para a próxima bola nova é
+$$ \sum_{s \ge 1} \left(\frac{k}{n}\right)^{s-1} \left(1 - \frac{k}{n}\right) s = \frac{1}{1 - \frac{k}{n}}, $$ [43]
+como obtemos da série na margem (onde $\sum_{s\ge1}x^{s-1}(1-x)s = \frac{1}{1-x}$). [29, 44] Assim, o número esperado de retiradas até termos retirado cada uma das $n$ bolas diferentes pelo menos uma vez é
+$$ \sum_{k=0}^{n-1} \frac{1}{1 - \frac{k}{n}} = \frac{n}{n} + \frac{n}{n-1} + \dots + \frac{n}{2} + \frac{n}{1} = nH_n \approx n \log n, $$ [45]
+com os limites sobre o tamanho dos números harmônicos que obtivemos na página 13. [46] Portanto, a resposta para o problema do colecionador de cupons é que devemos esperar que aproximadamente $n \log n$ retiradas sejam necessárias. [46]
+
+A estimativa que precisamos a seguir é para a probabilidade de que você precise de significativamente mais do que $n \log n$ tentativas. [47] Se $V_n$ denota o número de retiradas necessárias (esta é a variável aleatória cujo valor esperado é $E[V_n] \approx n \log n$), então para $n \ge 1$ e $c \ge 0$, a probabilidade de que precisemos de mais de $m := \lceil n \log n + cn \rceil$ retiradas é [48]
+$$ \text{Prob}[V_n > m] \le e^{-c}. $$ [49]
+De fato, se $A_i$ denota o evento de que a bola $i$ não é retirada nas primeiras $m$ retiradas, então [51]
+$$ \text{Prob}[V_n > m] = \text{Prob}\left[\bigcup_i A_i\right] \le \sum_i \text{Prob}[A_i] = n\left(1 - \frac{1}{n}\right)^m < ne^{-m/n} \le e^{-c}. $$ [52]
+
+\newpage
+
+\section{Embaralhamentos}
+Agora, vamos pegar um baralho de $n$ cartas. Nós as numeramos de 1 a $n$ na ordem em que vêm — então a carta numerada "1" está no topo do baralho, enquanto "n" está na base. [53] Vamos denotar a partir de agora por $\mathfrak{S}_n$ o conjunto de todas as permutações de $1, \dots, n$. [54] Embaralhar o baralho equivale à aplicação de certas permutações aleatórias à ordem das cartas. [55] Idealmente, isso poderia significar que aplicamos uma permutação arbitrária $\pi \in \mathfrak{S}_n$ à nossa ordem inicial $(1, 2, \dots, n)$, cada uma delas com a mesma probabilidade $\frac{1}{n!}$. [56] Assim, depois de fazer isso apenas uma vez, teríamos nosso baralho de cartas na ordem $\pi = (\pi(1), \pi(2), \dots, \pi(n))$, e esta seria uma ordem aleatória perfeita. [56] Mas não é isso que acontece na vida real. Em vez disso, ao embaralhar, apenas "certas" permutações ocorrem, talvez nem todas com a mesma probabilidade, e isso é repetido um "certo" número de vezes. [57] Depois disso, esperamos ou desejamos que o baralho esteja pelo menos "próximo do aleatório". [58]
+
+\subsection{Embaralhamentos "Top-in-at-random"}
+Estes são realizados da seguinte forma: você pega a carta do topo do baralho e a insere no baralho em um dos $n$ lugares possíveis distintos, cada um deles com probabilidade $\frac{1}{n}$. [60] Assim, uma das permutações
+$$ \tau_i = (2, 3, \dots, i, 1, i+1, \dots, n) $$ [66]
+é aplicada, $1 \le i \le n$. [67] Após um embaralhamento desses, o baralho não parece aleatório, e, de fato, esperamos precisar de muitos desses embaralhamentos até atingirmos esse objetivo. [68]
+
+\begin{figure}[h!]
+    \centering
+    % Placeholder for the image of top-in-at-random shuffles
+    \framebox[0.9\textwidth][c]{IMAGEM: Diagrama de embaralhamentos "Top-in-at-random"}
+    \caption{Uma sequência típica de embaralhamentos "top-in-at-random" pode ser como a seguinte (para $n=5$). [69]}
+\end{figure}
+
+Como devemos medir o "estar próximo do aleatório"? Os probabilistas criaram a "distância de variação" como uma medida bastante implacável de aleatoriedade: [100] olhamos para a distribuição de probabilidade sobre as $n!$ diferentes ordenações de nosso baralho ou, equivalentemente, sobre as $n!$ diferentes permutações $\sigma \in \mathfrak{S}_n$ que produzem as ordenações. [101]
+
+Dois exemplos são a nossa distribuição inicial E, que é dada por
+$$ E(\text{id}) = 1, \quad E(\pi) = 0 \text{ caso contrário}, $$ [105, 106]
+e a distribuição uniforme U, dada por
+$$ U(\pi) = \frac{1}{n!} \text{ para todo } \pi \in \mathfrak{S}_n. $$ [111]
+A distância de variação entre duas distribuições de probabilidade $Q_1$ e $Q_2$ é agora definida como
+$$ ||Q_1 - Q_2|| := \frac{1}{2} \sum_{\pi \in \mathfrak{S}_n} |Q_1(\pi) - Q_2(\pi)|. $$ [113]
+Definindo $S := \{\pi \in \mathfrak{S}_n : Q_1(\pi) > Q_2(\pi)\}$ e usando $\sum_\pi Q_1(\pi) = \sum_\pi Q_2(\pi) = 1$, podemos reescrever isso como
+$$ ||Q_1 - Q_2|| = \max_{S \subseteq \mathfrak{S}_n} |Q_1(S) - Q_2(S)|, $$ [115]
+com $Q_i(S) := \sum_{\pi \in S} Q_i(\pi)$. [116] Claramente, temos $0 \le ||Q_1 - Q_2|| \le 1$. [116] No que se segue, "estar próximo do aleatório" será interpretado como "ter pequena distância de variação da distribuição uniforme". [116] Aqui a distância entre a distribuição inicial e a distribuição uniforme é muito próxima de 1: [117]
+$$ ||E - U|| = 1 - \frac{1}{n!}. $$ [118]
+Após um embaralhamento "top-in-at-random", isso não será muito melhor: [119]
+$$ ||\text{Top} - U|| = 1 - \frac{1}{(n-1)!}. $$ [120]
+
+A distribuição de probabilidade em $\mathfrak{S}_n$ que obtemos ao aplicar o embaralhamento "top-in-at-random" $k$ vezes será denotada por $\text{Top}^{*k}$. [121] Como $||\text{Top}^{*k} - U||$ se comporta se $k$ se torna maior, ou seja, se repetirmos o embaralhamento? [122] A teoria geral implica que para $k$ grande a distância de variação $d(k) := ||\text{Top}^{*k} - U||$ vai a zero exponencialmente rápido, mas não produz o fenômeno de "cut-off" que se observa na prática: Após um certo número $k_0$ de embaralhamentos, "de repente" $d(k)$ vai para zero muito rápido. [125]
+
+\subsection{Regras de parada uniformes fortes}
+A incrível ideia de regras de parada uniformes fortes de Aldous e Diaconis captura as características essenciais. [128] Imagine que o gerente do cassino observa atentamente o processo de embaralhamento, analisa as permutações específicas que são aplicadas ao baralho em cada passo e, após um número de passos que depende das permutações que ele viu, grita "PARE!". [129] Então ele tem uma regra de parada que encerra o processo de embaralhamento. [130] Ela depende apenas dos embaralhamentos (aleatórios) que já foram aplicados. [131] A regra de parada é \textbf{uniforme forte} se a seguinte condição for válida para todo $k \ge 0$: [132]
+\begin{quote}
+    Se o processo for parado após exatamente $k$ passos, então as permutações resultantes do baralho têm distribuição uniforme (exatamente!). [133]
+\end{quote}
+
+Seja $T$ o número de passos realizados até que a regra de parada diga ao gerente para gritar "PARE!"; então esta é uma variável aleatória. [135] Da mesma forma, a ordenação do baralho após $k$ embaralhamentos é dada por uma variável aleatória $X_k$ (com valores em $\mathfrak{S}_n$). [136] Com isso, a regra de parada é uniforme forte se, para todos os valores viáveis de $k$, [137]
+$$ \text{Prob}[X_k = \pi | T = k] = \frac{1}{n!} \quad \text{para todo } \pi \in \mathfrak{S}_n. $$ [138]
+
+Três aspectos tornam isso interessante, útil e notável:
+\begin{enumerate}
+    \item Regras de parada uniformes fortes existem: Para muitos exemplos, elas são bastante simples. [140]
+    \item Além disso, elas podem ser analisadas: Tentar determinar $\text{Prob}[T > k]$ leva frequentemente a problemas combinatórios simples. [141]
+    \item Isso produz limites superiores eficazes para as distâncias de variação, como $d(k) = ||\text{Top}^{*k} - U||$. [142]
+\end{enumerate}
+
+Por exemplo, para os embaralhamentos "top-in-at-random", uma regra de parada uniforme forte é
+\begin{quote}
+    "PARE depois que a carta original da base (rotulada como $n$) for inserida pela primeira vez de volta no baralho." [144]
+\end{quote}
+De fato, se rastrearmos a carta $n$ durante esses embaralhamentos, [145] vemos que durante todo o processo a ordenação das cartas abaixo desta carta é completamente uniforme. [184] Então, depois que a carta $n$ sobe para o topo e é então inserida aleatoriamente, o baralho é uniformemente distribuído; [185] nós apenas não sabemos quando precisamente isso acontece (mas o gerente sabe). [186]
+
+Agora, seja $T_i$ a variável aleatória que conta o número de embaralhamentos realizados até que, pela primeira vez, $i$ cartas fiquem abaixo da carta $n$. [187] Temos que determinar a distribuição de [188]
+$$ T = T_1 + (T_2 - T_1) + \dots + (T_{n-1} - T_{n-2}) + (T - T_{n-1}). $$ [189]
+Mas cada parcela nesta soma corresponde a um problema do colecionador de cupons: $T_i - T_{i-1}$ é o tempo até que a carta do topo seja inserida em um dos $i$ lugares possíveis abaixo da carta $n$. [190] Portanto, é também o tempo que o colecionador de cupons leva do $(n-i)$-ésimo cupom para o $(n-i+1)$-ésimo cupom. [191] Seja $V_i$ o número de fotos compradas até que ele tenha $i$ fotos diferentes. [192] Então
+$V_n = V_1 + (V_2 - V_1) + \dots + (V_n - V_{n-1})$, [193] e vimos que $\text{Prob}[T_i - T_{i-1} = j] = \text{Prob}[V_{n-i+1} - V_{n-i} = j]$ para todos os $i$ e $j$. [196] Portanto, o colecionador de cupons e o embaralhador "top-in-at-random" realizam sequências equivalentes de processos aleatórios independentes, apenas na ordem oposta. [197]
+
+Assim, sabemos que a regra de parada uniforme forte para os embaralhamentos "top-in-at-random" leva mais de $k = \lceil n \log n + cn \rceil$ passos com baixa probabilidade: [198]
+$$ \text{Prob}[T > k] \le e^{-c}. $$ [199]
+E isso, por sua vez, significa que após $k = \lceil n \log n + cn \rceil$ embaralhamentos "top-in-at-random", nosso baralho está "próximo do aleatório", com [200]
+$$ d(k) = ||\text{Top}^{*k} - U|| \le e^{-c}, $$ [201]
+devido ao seguinte lema simples, mas crucial. [202]
+
+\paragraph{Lema.} Seja $Q: \mathfrak{S}_n \to \mathbb{R}$ uma distribuição de probabilidade qualquer que defina um processo de embaralhamento $Q^{*k}$ com uma regra de parada uniforme forte cujo tempo de parada é $T$. Então, para todo $k \ge 0$, [203]
+$$ ||Q^{*k} - U|| \le \text{Prob}[T > k]. $$ [204]
+
+\paragraph{Prova.} Se $X$ é uma variável aleatória com valores em $\mathfrak{S}_n$ com distribuição de probabilidade $Q$, então escrevemos $Q(S)$ para a probabilidade de que $X$ assuma um valor em $S \subseteq \mathfrak{S}_n$. [205] Assim, $Q(S) = \text{Prob}[X \in S]$, e no caso da distribuição uniforme $Q=U$, obtemos $U(S) = \frac{|S|}{n!}$. [206, 207] Para cada subconjunto $S \subseteq \mathfrak{S}_n$, obtemos a probabilidade de que, após $k$ passos, nosso baralho esteja ordenado de acordo com uma permutação em $S$ como [208]
+\begin{align*}
+    Q^{*k}(S) &= \text{Prob}[X_k \in S] \\ [209]
+    &= \sum_{j \le k} \text{Prob}[X_k \in S \wedge T=j] + \text{Prob}[X_k \in S \wedge T>k] \\ [210]
+    &= \sum_{j \le k} U(S)\text{Prob}[T=j] + \text{Prob}[X_k \in S | T > k] \cdot \text{Prob}[T>k] \\ [211]
+    &= U(S)(1 - \text{Prob}[T>k]) + \text{Prob}[X_k \in S | T > k] \cdot \text{Prob}[T>k] \\ [211]
+    &= U(S) + (\text{Prob}[X_k \in S | T > k] - U(S)) \cdot \text{Prob}[T>k]. [211]
+\end{align*}
+Isso resulta em [212]
+$$ |Q^{*k}(S) - U(S)| \le \text{Prob}[T > k], $$ [214]
+uma vez que $|\text{Prob}[X_k \in S|T>k] - U(S)|$ é uma diferença de duas probabilidades, então seu valor absoluto é no máximo 1. [215, 216] \hfill $\Box$
+
+Este é o ponto em que concluímos nossa análise do embaralhamento "top-in-at-random": provamos o seguinte limite superior para o número de embaralhamentos necessários para ficar "próximo do aleatório".
+
+\paragraph{Teorema 1.} Sejam $c \ge 0$ e $k := \lceil n \log n + cn \rceil$. Então, após realizar $k$ embaralhamentos "top-in-at-random" em um baralho de $n$ cartas, a distância de variação da distribuição uniforme satisfaz [218]
+$$ d(k) := ||\text{Top}^{*k} - U|| \le e^{-c}. $$ [219]
+
+Pode-se também verificar que a distância de variação $d(k)$ permanece grande se fizermos significativamente menos do que $n \log n$ embaralhamentos "top-in-at-random". [220] A razão é que um número menor de embaralhamentos não será suficiente para destruir a ordenação relativa das poucas cartas da base do baralho. [221] Claro, os embaralhamentos "top-in-at-random" são extremamente ineficientes — com os limites do nosso teorema, precisamos de mais de $2 \log 52 \approx 205$ embaralhamentos "top-in-at-random" até que um baralho de $n=52$ cartas esteja bem misturado. [222] Assim, agora voltamos nossa atenção para um modelo de embaralhamento muito mais interessante e realista. [223]
+
+\subsection{Riffle shuffles}
+Isso é o que os crupiês fazem no cassino: eles pegam o baralho, dividem-no em duas partes, e estas são então intercaladas, por exemplo, soltando cartas da base das duas metades do baralho em algum padrão irregular. [225] Novamente, um "riffle shuffle" realiza uma certa permutação nas cartas do baralho, que inicialmente assumimos estarem rotuladas de 1 a $n$, onde 1 é a carta do topo. [226] Os "riffle shuffles" correspondem exatamente às permutações $\pi \in \mathfrak{S}_n$ tais que a sequência $(\pi(1), \pi(2), \dots, \pi(n))$ consiste em duas sequências crescentes intercaladas (apenas para a permutação identidade é uma sequência crescente). [227, 228, 229]
+
+O seguinte modelo, desenvolvido primeiro por Edgar N. Gilbert e Claude Shannon em 1955, tem várias virtudes: [263]
+\begin{itemize}
+    \item é elegante, simples e parece natural, [269]
+    \item modela muito bem a maneira como um amador realizaria "riffle shuffles", [270]
+    \item e temos a chance de analisá-lo. [271]
+\end{itemize}
+Aqui estão três descrições — todas elas descrevem a mesma distribuição de probabilidade Rif em $\mathfrak{S}_n$: [272, 273]
+\begin{enumerate}
+    \item $\text{Rif}: \mathfrak{S}_n \to \mathbb{R}$ é definida por
+    $$ \text{Rif}(\pi) := \begin{cases} \frac{n+1}{2^n} & \text{se } \pi = \text{id}, \\ [278] \frac{1}{2^n} & \text{se } \pi \text{ consiste em duas sequências crescentes}, \\ [284] 0 & \text{caso contrário}. \end{cases} $$ [280, 283]
+    \item Corte $t$ cartas do baralho com probabilidade $\frac{1}{2^n}\binom{n}{t}$, leve-as para a sua mão direita e pegue o resto do baralho na sua mão esquerda. [285] Agora, quando você tem $r$ cartas na mão direita e $l$ na esquerda, "solte" a carta da base da sua mão direita com probabilidade $\frac{r}{r+l}$ e da sua mão esquerda com probabilidade $\frac{l}{r+l}$. Repita! [286]
+    \item Um embaralhamento inverso pegaria um subconjunto das cartas do baralho, as removeria do baralho e as colocaria no topo das cartas restantes do baralho, mantendo a ordem relativa em ambas as partes do baralho. [287] Tal movimento é determinado pelo subconjunto de cartas: pegue todos os subconjuntos com igual probabilidade. [288] Equivalentemente, atribua um rótulo "0" ou "1" a cada carta, aleatoriamente e independentemente com probabilidades $\frac{1}{2}$, e mova as cartas rotuladas com "0" para o topo. [289]
+\end{enumerate}
+
+Então, como podemos analisá-lo? Quantos "riffle shuffles" são necessários para chegar perto do aleatório? [292] Não obteremos a resposta precisa e ótima, mas uma muito boa, combinando três componentes: [293]
+\begin{enumerate}
+    \item Analisamos os "riffle shuffles" inversos em vez disso, [294]
+    \item descrevemos uma regra de parada uniforme forte para estes, [295]
+    \item e mostramos que a chave para sua análise é dada pelo paradoxo do aniversário! [296]
+\end{enumerate}
+
+\paragraph{Teorema 2.} Após realizar $k$ "riffle shuffles" em um baralho de $n$ cartas, a distância de variação de uma distribuição uniforme satisfaz [297]
+$$ ||\text{Rif}^{*k} - U|| \le 1 - \prod_{i=1}^{n-1}\left(1 - \frac{i}{2^k}\right). $$ [298]
+
+\paragraph{Prova.}
+(1) Podemos de fato analisar os "riffle shuffles" inversos. [300] Estes correspondem à distribuição de probabilidade dada por $\overline{\text{Rif}}(\pi) := \text{Rif}(\pi^{-1})$. [301] O fato de que toda permutação tem seu inverso único e que $U(\pi) = U(\pi^{-1})$ resulta em [302]
+$$ ||\text{Rif}^{*k} - U|| = ||\overline{\text{Rif}}^{*k} - U||. $$ [303]
+(Este é o lema de inversão de Reeds!) [304]
+
+(2) Em cada "riffle shuffle" inverso, cada carta recebe um dígito associado 0 ou 1. [305] Se nos lembrarmos desses dígitos — digamos que apenas os escrevemos nas cartas — então, após $k$ "riffle shuffles" inversos, cada carta terá uma sequência ordenada de $k$ dígitos. [331] Nossa regra de parada é: [332]
+\begin{quote}
+    "PARE assim que todas as cartas tiverem sequências distintas." [333]
+\end{quote}
+Quando isso acontece, as cartas no baralho são ordenadas de acordo com os números binários $b_k b_{k-1} \dots b_1$, onde $b_i$ é o bit que a carta pegou no $i$-ésimo "riffle shuffle" inverso. [334] Como esses bits são perfeitamente aleatórios e independentes, esta regra de parada é uniforme forte! [335]
+
+(3) O tempo $T$ levado por esta regra de parada é distribuído de acordo com o paradoxo do aniversário, para $K = 2^k$. [368] Colocamos duas cartas na mesma caixa se elas tiverem o mesmo rótulo $b_k b_{k-1} \dots b_1 \in \{0,1\}^k$. [368] Portanto, existem $K=2^k$ caixas, e a probabilidade de que alguma caixa receba mais de uma carta é [369]
+$$ \text{Prob}[T > k] = 1 - \prod_{i=1}^{n-1} \left(1 - \frac{i}{2^k}\right), $$ [370]
+e como vimos, isso limita a distância de variação $||\text{Rif}^{*k} - U|| = ||\overline{\text{Rif}}^{*k} - U||$. [371] \hfill $\Box$
+
+\newpage
+
+Então, com que frequência temos que embaralhar? Para $n$ grande, precisaremos de aproximadamente $k = 2 \log_2(n)$ embaralhamentos. [389] Explicitamente, para $n=52$ cartas, o limite superior do Teorema 2 indica $d(10) \le 0.73$, $d(12) \le 0.28$, $d(14) \le 0.08$, então $k=12$ deveria ser "aleatório o suficiente" para todos os propósitos práticos. [391] Mas não fazemos 12 embaralhamentos "na prática" — e eles não são realmente necessários, como uma análise mais detalhada mostra (com os resultados dados na margem). [392, 393] A análise de "riffle shuffles" é parte de uma discussão animada e contínua sobre a medida certa do que é "aleatório o suficiente". [394] Diaconis [4] é um guia para desenvolvimentos recentes. [395]
+
+\begin{table}[h!]
+    \centering
+    \caption{A distância de variação após k "riffle shuffles", de acordo com [2]. [385]}
+    \begin{tabular}{cc}
+        \hline
+        k & d(k) \\
+        \hline
+        1 & 1.000 [375] \\
+        2 & 1.000 [376] \\
+        3 & 1.000 [377] \\
+        4 & 1.000 [378] \\
+        5 & 0.952 [379] \\
+        6 & 0.614 [380] \\
+        7 & 0.334 [381] \\
+        8 & 0.167 [382] \\
+        9 & 0.085 [383] \\
+        10 & 0.043 [384] \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Isso importa? Sim, importa: mesmo após três bons "riffle shuffles", um baralho ordenado de 52 cartas parece bastante aleatório... mas não está. [396] Martin Gardner [5, Capítulo 7] descreve uma série de truques de cartas impressionantes que se baseiam na ordem oculta em tal baralho! [397]
+
+\begin{thebibliography}{9}
+    \bibitem{AldousDiaconis} D. Aldous \& P. Diaconis: Shuffling cards and stopping times, Amer. Math. Monthly 93 (1986), 333-348. [399]
+    \bibitem{BayerDiaconis} D. Bayer \& P. Diaconis: Trailing the dovetail shuffle to its lair, Annals Applied Probability 2 (1992), 294-313. [400]
+    \bibitem{Behrends} E. Behrends: Introduction to Markov Chains, Vieweg, Braunschweig/Wiesbaden 2000. [401]
+    \bibitem{Diaconis} P. Diaconis: Mathematical developments from the analysis of riffle shuffling, in: "Groups, Combinatorics and Geometry. Durham 2001" (A. A. Ivanov, M. W. Liebeck and J. Saxl, eds.), World Scientific, Singapore 2003, pp. 73-97. [402]
+    \bibitem{Gardner} M. Gardner: Mathematical Magic Show, Knopf, New York/Allen \& Unwin, London 1977. [403]
+    \bibitem{Gilbert} E. N. Gilbert: Theory of Shuffling, Technical Memorandum, Bell Laboratories, Murray Hill NJ, 1955. [404]
+\end{thebibliography}
+
+\end{document}

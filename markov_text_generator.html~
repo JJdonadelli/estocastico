@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Texto Markoviano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: end;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .output-section {
+            margin-top: 30px;
+        }
+        
+        .output {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            min-height: 150px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #2c3e50;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #e74c3c;
+            background: #fdf2f2;
+            border-color: #fad7d7;
+        }
+        
+        .examples {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+        }
+        
+        .examples h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .example-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .example-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .example-tag:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Gerador de Texto Markoviano</h1>
+            <p>Demonstração de cadeia de Markov para geração de texto artificial<br>
+            Baseado no livro "Alice no País das Maravilhas"</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <div class="form-group">
+                    <label for="startWord">Palavra inicial:</label>
+                    <input type="text" id="startWord" placeholder="Ex: alice, coelho, rainha..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="textLength">Comprimento:</label>
+                    <input type="number" id="textLength" value="50" min="10" max="200">
+                </div>
+                <button class="btn" onclick="generateText()">Gerar Texto</button>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h3>💡 Experimente estas palavras:</h3>
+            <div class="example-tags">
+                <span class="example-tag" onclick="setWord('alice')">alice</span>
+                <span class="example-tag" onclick="setWord('coelho')">coelho</span>
+                <span class="example-tag" onclick="setWord('rainha')">rainha</span>
+                <span class="example-tag" onclick="setWord('gato')">gato</span>
+                <span class="example-tag" onclick="setWord('chapeleiro')">chapeleiro</span>
+                <span class="example-tag" onclick="setWord('tempo')">tempo</span>
+                <span class="example-tag" onclick="setWord('país')">país</span>
+                <span class="example-tag" onclick="setWord('tribunal')">tribunal</span>
+            </div>
+        </div>
+        
+        <div class="output-section">
+            <div class="output" id="output">
+                Digite uma palavra inicial e clique em "Gerar Texto" para ver a magia acontecer! ✨
+                
+O algoritmo usa um modelo de Markov de ordem 2 (trigramas) para prever a próxima palavra baseada nas duas palavras anteriores.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados simulados do modelo Markov - em uma aplicação real, estes viriam do arquivo processado
+        const sampleModel = {
+            "alice": [
+                "estava", "olhou", "pensou", "disse", "foi", "viu", "ouviu", "sentiu", "correu", "caiu",
+                "ficou", "começou", "parou", "voltou", "saiu", "entrou", "subiu", "desceu", "andou"
+            ],
+            "coelho": [
+                "branco", "disse", "correu", "olhou", "saltou", "desapareceu", "gritou", "sussurrou",
+                "pulou", "fugiu", "parou", "virou", "acenou", "mostrou", "tirou"
+            ],
+            "rainha": [
+                "de", "gritou", "ordenou", "disse", "mandou", "olhou", "apontou", "ficou", "estava",
+                "tinha", "queria", "podia", "devia", "iria", "faria"
+            ],
+            "gato": [
+                "de", "disse", "sorriu", "apareceu", "desapareceu", "olhou", "falou", "riu",
+                "piscou", "moveu", "balançou", "mostrou", "explicou", "perguntou"
+            ],
+            "chapeleiro": [
+                "maluco", "disse", "olhou", "pegou", "colocou", "tirou", "mexeu", "falou",
+                "riu", "cantou", "dançou", "serviu", "ofereceu", "mostrou"
+            ],
+            "tempo": [
+                "passa", "voa", "para", "corre", "demora", "acelera", "diminui", "muda",
+                "não", "sempre", "nunca", "às", "todo", "pouco", "muito"
+            ],
+            "país": [
+                "das", "estranho", "mágico", "curioso", "diferente", "incrível", "fantástico",
+                "maravilhoso", "bizarro", "peculiar", "único", "especial", "encantado"
+            ],
+            "tribunal": [
+                "estava", "tinha", "foi", "seria", "começou", "terminou", "julgou",
+                "decidiu", "ordenou", "proclamou", "anunciou", "determinou", "estabeleceu"
+            ]
+        };
+
+        const continuations = {
+            "estava": ["muito", "bem", "mal", "feliz", "triste", "confusa", "surpresa", "curiosa", "pensando", "olhando"],
+            "disse": ["que", "para", "com", "algo", "nada", "tudo", "isso", "aquilo", "então", "assim"],
+            "olhou": ["para", "ao", "pela", "através", "dentro", "fora", "cima", "baixo", "lado", "frente"],
+            "foi": ["para", "até", "em", "pela", "com", "sem", "sobre", "contra", "através", "dentro"],
+            "muito": ["bem", "mal", "longe", "perto", "alto", "baixo", "rápido", "devagar", "grande", "pequeno"],
+            "de": ["repente", "novo", "volta", "longe", "perto", "cima", "baixo", "lado", "frente", "costas"],
+            "branco": ["correu", "saltou", "olhou", "disse", "gritou", "desapareceu", "fugiu", "parou", "virou", "pulou"],
+            "das": ["maravilhas", "flores", "cores", "formas", "sombras", "luzes", "vozes", "palavras", "histórias", "aventuras"],
+            "gritou": ["alto", "forte", "baixo", "para", "com", "contra", "sobre", "que", "algo", "nada"],
+            "maluco": ["estava", "ficou", "parecia", "dançou", "cantou", "riu", "chorou", "pulou", "correu", "parou"]
+        };
+
+        function generateMarkovText(startWord, length) {
+            startWord = startWord.toLowerCase().trim();
+            
+            if (!sampleModel[startWord]) {
+                throw new Error(`Palavra "${startWord}" não encontrada no modelo.`);
+            }
+            
+            let result = [startWord];
+            let currentWord = startWord;
+            
+            for (let i = 1; i < length; i++) {
+                let nextOptions;
+                
+                if (sampleModel[currentWord]) {
+                    nextOptions = sampleModel[currentWord];
+                } else if (continuations[currentWord]) {
+                    nextOptions = continuations[currentWord];
+                } else {
+                    // Palavras genéricas para continuar
+                    nextOptions = ["e", "que", "de", "para", "com", "em", "por", "sobre", "depois", "então"];
+                }
+                
+                const nextWord = nextOptions[Math.floor(Math.random() * nextOptions.length)];
+                result.push(nextWord);
+                currentWord = nextWord;
+                
+                // Adicionar pontuação ocasionalmente
+                if (Math.random() < 0.15 && i < length - 1) {
+                    if (Math.random() < 0.7) {
+                        result[result.length - 1] += ",";
+                    } else {
+                        result[result.length - 1] += ".";
+                    }
+                }
+            }
+            
+            // Garantir que termine com ponto
+            if (!result[result.length - 1].endsWith('.') && !result[result.length - 1].endsWith(',')) {
+                result[result.length - 1] += ".";
+            }
+            
+            return result.join(" ");
+        }
+
+        function generateText() {
+            const startWord = document.getElementById('startWord').value.trim();
+            const length = parseInt(document.getElementById('textLength').value);
+            const output = document.getElementById('output');
+            
+            if (!startWord) {
+                output.innerHTML = '<span class="error">Por favor, digite uma palavra inicial!</span>';
+                return;
+            }
+            
+            if (length < 10 || length > 200) {
+                output.innerHTML = '<span class="error">O comprimento deve estar entre 10 e 200 palavras.</span>';
+                return;
+            }
+            
+            output.innerHTML = '<span class="loading">🔄 Gerando texto...</span>';
+            
+            setTimeout(() => {
+                try {
+                    const generatedText = generateMarkovText(startWord, length);
+                    output.innerHTML = `<strong>📝 Texto gerado:</strong><br><br>${generatedText}`;
+                    output.className = 'output';
+                } catch (error) {
+                    output.innerHTML = `<span class="error">❌ ${error.message}<br><br>💡 Tente uma das palavras sugeridas acima!</span>`;
+                    output.className = 'output error';
+                }
+            }, 800);
+        }
+        
+        function setWord(word) {
+            document.getElementById('startWord').value = word;
+            document.getElementById('startWord').focus();
+        }
+        
+        // Permitir gerar texto com Enter
+        document.getElementById('startWord').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateText();
+            }
+        });
+        
+        document.getElementById('textLength').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateText();
+            }
+        });
+        
+        // Adicionar algumas animações de entrada
+        window.addEventListener('load', function() {
+            document.querySelector('.container').style.opacity = '0';
+            document.querySelector('.container').style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                document.querySelector('.container').style.transition = 'all 0.8s ease';
+                document.querySelector('.container').style.opacity = '1';
+                document.querySelector('.container').style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

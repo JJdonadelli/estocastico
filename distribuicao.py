@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Matriz de transição de 4 páginas (A, B, C, D)
+P = np.array([
+    [0,   0.5, 0.5, 0  ],
+    [1/3 ,  0,   1/3, 1/3],
+    [.5,   0,   0,   0.5  ],
+    [0.5,   0.5 , 0,   0]
+])
+
+# Nomes das páginas
+pages = ['1', '2', '3', '4']
+
+# Simular passeio aleatório
+np.random.seed(42)
+n_steps = 10_000
+visits = np.zeros(len(pages))
+state = 0  # começa na página A
+
+for _ in range(n_steps):
+    visits[state] += 1
+    state = np.random.choice(range(4), p=P[state])
+
+# Frequência relativa de visita a cada página
+frequencies = visits / n_steps
+
+# Visualização
+plt.bar(pages, frequencies, color='skyblue')
+
+plt.savefig('stationary_dist.png')
+
+plt.title("Distribuição estacionária aproximada")
+plt.ylabel("Frequência de visita")
+plt.show()
