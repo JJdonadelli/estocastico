@@ -6,7 +6,7 @@ import os
 
 # Configuração da página
 st.set_page_config(
-    page_title="🎭 Gerador de Texto Markoviano",
+    page_title="Gerador de Texto Markoviano",
     page_icon="🎭",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -77,27 +77,13 @@ st.markdown("""
 
 # Função para carregar e processar o texto
 @st.cache_data
-def load_and_process_text(file_path="/data/acile.txt"):
+def load_and_process_text(file_path="data/acile.txt"):
     """Carrega o arquivo de texto e constrói o modelo Markov"""
+
+    
     try:
-        if not os.path.exists(file_path):
-            # Se não encontrar o arquivo, usar texto de exemplo
-            sample_text = """
-            Alice estava sentada na margem do rio com sua irmã, quando de repente 
-            viu um coelho branco passar correndo. O coelho branco olhou para o relógio 
-            e disse que estava atrasado. Alice ficou curiosa e seguiu o coelho branco 
-            até cair em um buraco muito profundo. No País das Maravilhas, Alice 
-            encontrou muitas criaturas estranhas, incluindo o Gato de Cheshire que 
-            sempre sorria, o Chapeleiro Maluco que servia chá, e a Rainha de Copas 
-            que sempre gritava para cortar cabeças. Alice aprendeu que no País das 
-            Maravilhas tudo era diferente e mágico. O tempo passava de forma estranha 
-            e as regras não faziam sentido. Alice teve muitas aventuras até 
-            finalmente acordar e perceber que tudo foi um sonho incrível.
-            """ * 10  # Repetir para ter mais dados
-            text = sample_text.lower()
-        else:
-            with open(file_path, encoding="utf-8") as f:
-                text = f.read().lower()
+        with open(file_path, encoding="utf-8") as f:
+            text = f.read().lower()
         
         # Quebrar em palavras
         words = re.findall(r"\b\w+\b", text)
@@ -114,7 +100,7 @@ def load_and_process_text(file_path="/data/acile.txt"):
         return None, 0
 
 # Função para gerar texto (adaptada do seu código original)
-def generate_text(model, start_words, length=50):
+def generate_text(model, start_words, length=10):
     """Gera texto usando o modelo Markov"""
     try:
         # Se o usuário passar apenas uma palavra, escolher uma segunda compatível
@@ -142,7 +128,7 @@ def generate_text(model, start_words, length=50):
 # Interface principal
 def main():
     # Cabeçalho
-    st.markdown('<h1 class="main-header">🎭 Gerador de Texto Markoviano</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header"> Gerador de Texto Markoviano</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Demonstração de Cadeia de Markov para Geração de Texto Artificial<br>Baseado em "Alice no País das Maravilhas"</p>', unsafe_allow_html=True)
     
     # Carregar o modelo
@@ -178,7 +164,7 @@ def main():
     
     # Exemplos de palavras - ANTES do input para funcionar
     st.markdown("### 🔤 Experimente estas palavras:")
-    example_words = ['alice', 'coelho', 'rainha', 'gato', 'chapeleiro', 'tempo', 'país', 'sonho']
+    example_words = ['alice', 'coelho', 'rainha', 'gato', 'chapeleiro']
     
     cols = st.columns(len(example_words))
     for i, word in enumerate(example_words):
@@ -207,7 +193,7 @@ def main():
             "📏 Comprimento:",
             min_value=10,
             max_value=200,
-            value=50,
+            value=10,
             help="Número de palavras a gerar"
         )
     
@@ -238,26 +224,27 @@ def main():
                     )
                     
                     # Opções adicionais
-                    col1, col2, col3 = st.columns(3)
-                    
-                    with col1:
-                        if st.button("🔄 Gerar Novamente"):
+                    # col1, col2, col3 = st.columns(3)
+                    # col1, col2 = st.columns(2)
+
+                    # with st.columns(1):
+                    if st.button("🔄 Gerar Novamente"):
                             st.rerun()
                     
-                    with col2:
-                        st.download_button(
-                            "💾 Baixar Texto",
-                            data=generated_text,
-                            file_name=f"texto_markov_{start_word}.txt",
-                            mime="text/plain"
-                        )
+                    # with col2:
+                        # st.download_button(
+                        #     "💾 Baixar Texto",
+                        #     data=generated_text,
+                        #     file_name=f"texto_markov_{start_word}.txt",
+                        #     mime="text/plain"
+                        # )
                     
-                    with col3:
-                        if st.button("📋 Copiar"):
-                            st.info("Use Ctrl+C para copiar o texto acima!")
+                    # with col3: 
+                        # if st.button("📋 Copiar"):
+                            # st.info("Use Ctrl+C para copiar o texto acima!")
 
     # Explicação do algoritmo na parte inferior
-    with st.expander("🧠 Como funciona o Algoritmo Markov"):
+    with st.expander("Como funciona o Algoritmo Markov"):
         st.markdown("""
         ### 🔍 **Cadeia de Markov de Ordem 2 (Trigramas)**
         
@@ -276,12 +263,12 @@ def main():
            - Escolhemos aleatoriamente a próxima palavra baseada no modelo
            - Repetimos o processo até atingir o comprimento desejado
         
-        ### 📈 **Vantagens:**
+        ### **Vantagens:**
         - Preserva padrões linguísticos do texto original
         - Gera texto que "soa" como o autor original
         - Simples de implementar e entender
         
-        ### ⚠️ **Limitações:**
+        ### **Limitações:**
         - Não entende significado, apenas padrões
         - Pode gerar frases sem sentido
         - Limitado ao vocabulário do texto original
