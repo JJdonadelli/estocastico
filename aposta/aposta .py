@@ -27,13 +27,15 @@ second_pattern = {
 # ------------------- execução -------------------
 if __name__ == "__main__":
 
-    print("Dois amigos amigos vão a feira. Pra decidir quem pagará o pastel fazem uma aposta: " \
-    "Cada um escolhe uma sequência de 3 caras (c) ou coroas (k) e eles jogam uma moeda até que " \
-    "saia uma das duas sequências. Aquele que tiver escolhido a primeira sequência a sair ganhou a aposta.")
+    print("Dois amigos foram passear na feira. Quando chegaram à barraca de pastel, " \
+    "decidiram fazer uma aposta para ver quem iria pagar a conta. Cada um escolheu, " \
+    "de antemão, uma sequência de três resultados possíveis nos lançamentos de uma " \
+    "moeda — cara (c) e coroa (k). Em seguida, começaram a lançar a moeda repetidamente, " \
+    "combinando que o vencedor seria aquele cuja sequência aparecesse primeiro.")
 
     p1=""
     while p1 not in patterns:
-        p1 = input("Digite o seu padrão (ex: ckc): ").strip().lower()
+        p1 = input("\nDigite o seu padrão (ex: ckc): ").strip().lower()
         if p1 not in patterns:  print("Padrão inválido! Use apenas combinações de 'c' e 'k' com 3 letras.")
     p2 = second_pattern[p1]
     print(f"O meu padrão é {p2}")
@@ -53,7 +55,6 @@ if __name__ == "__main__":
                 vencedor = p2
                 break 
                 
-
-    print(f"\nO padrão vencedor foi: {vencedor}")
+    print(f"\n\nO padrão vencedor foi: {vencedor}")
     if vencedor == p1 : print("Parabéns")
     else : print("Tente novamente")
