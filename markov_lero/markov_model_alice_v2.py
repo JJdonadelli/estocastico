@@ -77,7 +77,7 @@ st.markdown("""
 
 # Função para carregar e processar o texto
 @st.cache_data
-def load_and_process_text(file_path="acile.txt"):
+def load_and_process_text(file_path="/data/acile.txt"):
     """Carrega o arquivo de texto e constrói o modelo Markov"""
     try:
         if not os.path.exists(file_path):
