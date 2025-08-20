@@ -175,7 +175,7 @@ st.markdown("""
 <div class="main-header">
     <h1>Jogo da Moeda</h1>
     <h3>A primeira ocorrencia de um padrão</h3>
-    <p style="font-size: 1.2em; margin-top: 10px;">Quem vai pagar o pastel?</p>
+    <p style="font-size: 1.2em; margin-top: 10px;">(ou, quem vai pagar o pastel?)</p>
 </div>
 """, unsafe_allow_html=True)
 
