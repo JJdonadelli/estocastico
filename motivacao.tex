@@ -8,63 +8,93 @@
 \title{MCBM022-23 Introdução aos Processos Estocásticos}
 \subtitle{\url{professor.ufabc.edu.br/~jair.donadelli/estocastico/}}
 %\author{Disciplina: Introdução a Processos Estocásticos}
-\date{}
+\date{2025-3}
 
 \begin{document}
 
 \frame{\titlepage}
 
-\begin{frame}{EMENTA}
+\begin{frame}{Programa}
 
-  \begin{itemize}
-  \item Cadeias de Markov discretas e comportamento assintótico:
-    passeios aleatórios, processo de ramificação.
-  \item Processos de Poisson. 
-  \item Cadeias de Markov em tempo contínuo. 
-  \item Processos de renovação. 
-  \item Martingais. 
-  \item Introdução ao movimento browniano.
-  \end{itemize}
+  \begin{minipage}[h]{.45\linewidth}
+    
+    \begin{itemize}
+    \item Cadeias de Markov 
+    \item Processos de Poisson. 
+    \item Martingais. 
+    \item Movimento browniano.
+    \end{itemize}
+    
+  \end{minipage}
+  \begin{minipage}[h]{.45\linewidth}
 
+    \includegraphics[scale=.3]{livro.png}
+    
+  \end{minipage}
 
-  \vfill
-
-  ROSS, Sheldon M. Introduction to probability models.
   
   \vfill
 
+  2 provas + substitutiva
+  
+  \vfill
+
+  Não reprovo por falta com conceito \textbf{C} ou maior
+  
+  \vfill
+
+ 
   RECOMENDAÇÃO: Álgebra Linear; Cálculo de Probabilidade 
   
 \end{frame}
 
 %% ===============================================================
+\begin{frame}{Processo Determinístico}
 
-\begin{frame}
+\includegraphics[width=\textwidth]{projetil.png}
 
-  \vfill
-  
-  3 provas, negociáveis dependendo do tamanho da turma
-
-  \vfill
-  
-  Contabilizo faltas  (chamada ou lista ou QR) 
-
-  \vfill
-
-  Não reprovo por falta com conceito C ou maior
-  
-  \vfill
-
-  Chamada ou lista,  em $\geq 13$ dias aleatórios
-
-  \vfill
-  
 \end{frame}
 
 %% ===============================================================
 
-\begin{frame}{Motivação}
-\begin{block}{Pergunta}
+\begin{frame}{Estocástico ou Aleatório}
+
+\includegraphics[width=\textwidth]{srw1.png}
+
+\end{frame}
+
+%% ===============================================================
+\begin{frame}{Estocástico ou Aleatório}
+
+\includegraphics[width=\textwidth]{srw2.png}
+
+\end{frame}
+
+%% ===============================================================
+\begin{frame}{Estocástico ou Aleatório}
+
+\includegraphics[width=\textwidth]{srw3.png}
+
+\end{frame}
+
+%% ===============================================================
+\begin{frame}{Estocástico ou Aleatório}
+
+\includegraphics[width=\textwidth]{srw4.png}
+
+\end{frame}
+
+%% ===============================================================
+\begin{frame}{Estocástico ou Aleatório}
+
+\includegraphics[width=\textwidth]{srw5.png}
+
+\end{frame}
+
+%% ===============================================================
+
+\begin{frame}{Page rank}
+\begin{block}{}
 Como o Google decide qual página deve aparecer primeiro quando você faz uma busca?
 \end{block}
 \pause
@@ -96,9 +126,9 @@ Grafo dirigido com 4 páginas: 1, 2, 3, 4
     \end{bmatrix}
   \]
   \begin{itemize}
-  \item Cada linha representa uma página atual.
-  \item Cada coluna representa uma página de destino.
-      $$P_{ij} = \mathrm{Prob}(i\to j) = \mathbb{P} \big( X_{n+1} = j \mid X_n=i \big)$$
+  \item  linha representa uma página atual
+  \item coluna representa uma página destino.
+      $$P_{ij} = \mathrm{Prob} ~i\to j$$% 
   \item A soma de cada linha é 1: matriz estocástica.
   \end{itemize}
   
@@ -108,13 +138,23 @@ Grafo dirigido com 4 páginas: 1, 2, 3, 4
 %% ===============================================================
 
 \begin{frame}{Transições em 2 passos: $P^2$}
-  \begin{block}{Significado de $P^2$}
+
+  \vfill
+
+   $$P_{ij} = \mathbb{P} \big( X_{n+1} = j \mid X_n=i \big)$$
+
+   \vfill
+   
+  \begin{block}{Significado de $P^2$}\pause
     \[ (P^2)_{ij} = \mathbb{P}(X_{n+2} = j \mid X_n = i) \]
   \end{block}
+
+   \vfill
+  
   \begin{itemize}
   \item Cada entrada de $P^2$ representa a probabilidade de ir do estado $i$ para o estado $j$ em dois passos.
     \[ (P^2)_{ij} = \sum_k P_{ik} P_{kj} \]
-  \item Soma sobre todos os caminhos possíveis com dois passos.
+%  \item Soma sobre todos os caminhos possíveis com dois passos.
   \end{itemize}
 \end{frame}
 
@@ -209,55 +249,32 @@ Frequência de visita a cada página após 10.000 passos.
 %% ===============================================================
 
 \begin{frame}{Simulando o "robô" do Google}
+
+  $$ \bm{\pi}^{(0)} = \left(\pi_1^{(0)},\pi_2^{(0)},\pi_3^{(0)},\pi_4^{(0)}\right), \quad\text{ com } \pi_j^{(0)}\in[0,1],\quad\sum_j\pi_j^{(0)}=1$$
+  
   \begin{itemize}
-  \item O robô começa na página $i$ com probabilidade $\pi_i$.
-  \item A cada passo, segue um link aleatório com base nas
-    probabilidades da matriz.
+  \item O robô começa na página $i$ com probabilidade $\pi_i^{(0)}$.
+  \item A cada passo, segue um link aleatório.
   \item Após muitos passos, a proporção de visitas a cada página se
-    estabiliza $\bm\pi_0 = (\pi_1,\dots,\pi_n) \to\bm\pi$. 
+    estabiliza $\bm{\pi}^{(0)}, \bm{\pi}^{(1)}, \dots, \bm{\pi}^{(n)} \xrightarrow[n\to\infty]{}  \bm{\pi}$. 
   \end{itemize}
   \begin{block}{Distribuição estacionária}
-    \[ \pi P = \pi \quad \text{com} \quad \sum \pi_i = 1 \]
+    \[ \bm\pi P = \bm\pi \quad \text{com} \quad \sum \pi_i = 1 \]
   \end{block}
 \end{frame}
 
 %% ===============================================================
 
-\begin{frame}{Cálculo com Álgebra Linear}
-\begin{itemize}
-    \item Procuramos o vetor \( \pi \) tal que:
-    \[ \bm\pi P = \bm\pi \quad \Leftrightarrow \quad (P^T - I)\bm\pi^T = \bm0 \]
-    \item Isso é um problema de autovalor.
-\end{itemize}
+\begin{frame}[c]{Álgebra Linear}
+
+  \begin{center}
+    \( \bm\pi \) tal que \( \bm\pi P = \bm\pi \)   é um problema de autovalor.
+  \end{center}
+  
 \end{frame}
 
 %% ===========================================================================================
 \end{document}
 
-
-\begin{frame}{Conexões com o Curso}
-\begin{itemize}
-    \item Cadeias de Markov discretas: conceito central para esta aula.
-    \item Processos de renovação: e se os links mudam ao longo do tempo?
-    \item Martingales: a importância das expectativas condicionais.
-    \item Movimento Browniano: versão contínua do passeio aleatório.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Para Próximas Aulas}
-\begin{itemize}
-    \item Definição formal de Cadeia de Markov.
-    \item Propriedades: ergodicidade, reversibilidade, estado estacionário.
-    \item Exemplos com jogos, filas e processos de decisão.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Referências}
-\begin{itemize}
-    \item Grinstead & Snell, \emph{Introduction to Probability}
-    \item Norris, \emph{Markov Chains}
-    \item Langville & Meyer, \emph{Google's PageRank and Beyond}
-\end{itemize}
-\end{frame}
 
 \end{document}
