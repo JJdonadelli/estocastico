@@ -36,7 +36,11 @@ def plotar_passeio_aleatorio(n_passos=50, n_simulacoes=2):
         plt.scatter(tempo, posicoes, c=cor, s=25, alpha=0.9, zorder=5, 
                    edgecolors='white', linewidth=0.5)
     
-    plt.title(f'Passeio Aleatório Simples - {n_passos} passos', fontsize=16)
+
+    plt.title(
+    fr"{n_simulacoes} Passeios Aleatórios Simples - $S_n = X_1+\cdots+X_n,~~X_i \in_{{\text{{R}}}} \{{-1,+1\}}$",
+    fontsize=16 
+    )   
     plt.xlabel('Tempo (número de passos)', fontsize=12)
     plt.ylabel('Posição', fontsize=12)
     plt.grid(True, alpha=0.3)
@@ -50,4 +54,4 @@ def plotar_passeio_aleatorio(n_passos=50, n_simulacoes=2):
 
 # Executar o gráfico
 print("Dois passeios aleatórios DISCRETOS com 50 passos...")
-plotar_passeio_aleatorio(n_passos=150, n_simulacoes=3)
+for _ in range (1,10) : plotar_passeio_aleatorio(n_passos=50, n_simulacoes=3)

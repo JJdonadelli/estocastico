@@ -45,14 +45,20 @@ def plotar_passeio_aleatorio(n_passos=50, n_simulacoes=2):
     y_pos2 = np.sqrt(x) *2
     y_neg2 = -np.sqrt(x) *2
 
+    y_pos3 = np.sqrt(x) *3
+    y_neg3 = -np.sqrt(x) *3
     
-    plt.plot(x, y_pos, 'gray', linewidth=1, alpha=0.8, label='√x', linestyle='-')
-    plt.plot(x, y_neg, 'gray', linewidth=1, alpha=0.8, label='-√x', linestyle='-')
+    plt.plot(x, y_pos, 'lightgray', linewidth=1.5, alpha=0.8, label='√n', linestyle='-')
+    plt.plot(x, y_neg, 'lightgray', linewidth=1.5, alpha=0.8, linestyle='-')
 
-    plt.plot(x, y_pos2, 'black', linewidth=2, alpha=0.8, label='2√x', linestyle='-')
-    plt.plot(x, y_neg2, 'black', linewidth=2, alpha=0.8, label='-2√x', linestyle='-')
+    plt.plot(x, y_pos2, 'darkgray', linewidth=1.5, alpha=0.8, label='2√n', linestyle='-')
+    plt.plot(x, y_neg2, 'darkgray', linewidth=1.5, alpha=0.8, linestyle='-')
+
+    plt.plot(x, y_pos3, 'black', linewidth=2, alpha=0.8, label='3√n', linestyle='-')
+    plt.plot(x, y_neg3, 'black', linewidth=2, alpha=0.8,  linestyle='-')
+
     
-    plt.title(f'Passeio Aleatório e  desvios-padrão - {n_passos} passos', fontsize=16)
+    plt.title(fr'{ n_simulacoes} Passeios Aleatório $\times$ desvios-padrão ({n_passos} passos)', fontsize=16)
     plt.xlabel('Tempo (número de passos)', fontsize=12)
     plt.ylabel('Posição', fontsize=12)
     plt.grid(True, alpha=0.3)
@@ -65,5 +71,5 @@ def plotar_passeio_aleatorio(n_passos=50, n_simulacoes=2):
     plt.show()
 
 # Executar o gráfico
-print("Dois passeios aleatórios DISCRETOS com 50 passos...")
-plotar_passeio_aleatorio(n_passos=1500, n_simulacoes=3)
+# print("Dois passeios aleatórios DISCRETOS com 50 passos...")
+for _ in range (1,10): plotar_passeio_aleatorio(n_passos=3000, n_simulacoes=3)

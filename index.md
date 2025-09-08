@@ -30,7 +30,7 @@ GRIMMETT, Geoffrey; STIRZAKER, David. Probability and random processes. 3. ed. O
 
 TAYLOR, Howard M.; KARLIN, Samuel. An introduction to stochastic modeling. 3. ed. San Diego, USA: Academic Press, 1998. xi, 631. ISBN 9780126848878. 955 
 
-RESNICK, Sidney I. Adventures in stochastic processes. Boston, USA: Birkhäuser Science, c1992. xii, 626. ISBN 9780817635916. Outras Bibliografias ÇINLAR, Erhan. Introduction to stochastic processes. Mineola, USA: Dover, 2013. vii, 404. ISBN 9780486497976.
+RESNICK, Sidney I. Adventures in stochastic processes. Boston, USA: Birkhäuser Science, c1992. xii, 626. ISBN 9780817635916. 
 
 **MATERIAL COMPLEMENTAR** 
 
@@ -65,9 +65,17 @@ RESNICK, Sidney I. Adventures in stochastic processes. Boston, USA: Birkhäuser 
 
 
 
+### Recuperação
+
+Tem direito ao exame recuperação, o qual engloba todo o conteúdo da disciplina, aqueles que foram aprovado com D ou reprovado com F e obtiveram frequência mínima.  O resultado do exame é um conceito que compõe com o conceito final **M** obtido na avaliação regular da disciplina como segue:
+
+![image-20230203090019550](./image-20230203090019550.png)
+
+O aluno deve manifestar interesse em fazer a recuperação de acordo com as instruções que serão enviadas pelo siga em momento apropriado durante o curso da disciplina.
+
 ## **Atendimento**
 
-
+ 
 
 
 

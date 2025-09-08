@@ -20,14 +20,14 @@ altura_maxima = (v0**2) / (2 * g)  # altura máxima
 
 # Criar o gráfico
 plt.figure(figsize=(10, 8))
-plt.plot(t, altura, 'b-', linewidth=3, label='Altura h(t)')
+plt.plot(t, altura, 'b-', linewidth=3, label=r'Altura $S(t)$')
 plt.plot(tempo_altura_maxima, altura_maxima, 'ro', markersize=10, 
          label=f'Altura máxima ({tempo_altura_maxima:.1f}s, {altura_maxima:.1f}m)')
 
 # Configurar o gráfico
-plt.xlabel('Tempo (s)', fontsize=12)
-plt.ylabel('Altura (m)', fontsize=12)
-plt.title('Movimento Vertical de Projétil\n$h(t) = v_0t - \\frac{1}{2}gt^2$', fontsize=14)
+plt.xlabel(r'Tempo ($s$)', fontsize=12)
+plt.ylabel(r'Altura ($m$)', fontsize=12)
+plt.title('Movimento Vertical de Projétil - $S(t) = v_0t - \\frac{1}{2}gt^2$', fontsize=14)
 plt.grid(True, alpha=0.3)
 plt.legend(fontsize=11)
 
@@ -43,11 +43,11 @@ plt.xlim(0, tempo_total * 1.05)
 plt.ylim(0, altura_maxima * 1.1)
 
 # Adicionar informações do problema
-textstr = f'''Parâmetros:
-• Velocidade inicial: {v0} m/s
-• Aceleração da gravidade: {g} m/s²
-• Equação: h(t) = {v0}t - {g/2:.1f}t²
-• Tempo total de voo: {tempo_total:.1f} s'''
+textstr = fr'''Parâmetros:
+• $v_0=${v0} m/s
+• $g=${g} m/s²
+• posição: $S(t)=${v0}$t - ${g/2:.1f}$t^2$
+'''
 
 props = dict(boxstyle='round', facecolor='lightblue', alpha=0.8)
 plt.text(0.02, 0.98, textstr, transform=plt.gca().transAxes, fontsize=10,
@@ -64,7 +64,7 @@ print(f"Aceleração da gravidade (g): {g} m/s²")
 print(f"Altura máxima: {altura_maxima} m")
 print(f"Tempo para altura máxima: {tempo_altura_maxima} s")
 print(f"Tempo total de voo: {tempo_total} s")
-print(f"Equação do movimento: h(t) = {v0}t - {g/2}t²")
+print(fr"Equação do movimento: $S(t) = v_0t - \frac g2 t^2")
 
 print("\nALGUNS PONTOS DA TRAJETÓRIA:")
 print("=" * 40)
