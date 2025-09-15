@@ -270,6 +270,16 @@
             text-decoration: underline;
         }
 
+	.expandable-content a {
+            color: #0066cc;
+        }
+
+        .expandable-content a:hover {
+            color: #004499;
+            text-decoration: underline;
+        }
+
+	
         @media (max-width: 768px) {
             .patterns-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -296,8 +306,22 @@
             combinando que o vencedor seria aquele cuja sequência aparecesse primeiro.
         </div>
 
+        <div class="expandable">
+            <div class="expandable-header" onclick="toggleExpand('how-to-play')">
+                Como jogar
+            </div>
+            <div class="expandable-content" id="how-to-play">
+                <strong>1. Escolha seu padrão:</strong> Clique em uma das sequências de 3 resultados<br><br>
+                <strong>2. O computador, seu adversário, escolhe automaticamente</strong> outro padrão usando uma estratégia<br><br>
+                <strong>3. Clique em "🎲 Iniciar Jogo"</strong> e as moedas serão lançadas automaticamente (repita quantas vezes quiser) <br><br>
+                <strong>4. O jogo para automaticamente</strong> quando um dos padrões aparecer primeiro nos últimos 3 lançamentos<br><br>
+                <strong> Vence quem conseguir que sua sequência apareça primeiro!</strong> <br><br>
+            </div>
+        </div>
+
         <h2 class="section-title">Escolha seu padrão</h2>
-        
+
+	
         <div class="patterns-grid" id="patterns-grid">
             <!-- Padrões serão gerados via JavaScript -->
         </div>
@@ -308,62 +332,123 @@
 
         <div class="controls">
             <button class="btn btn-primary" id="start-game" disabled>🎲 Iniciar Jogo</button>
-            <button class="btn btn-secondary" id="reset-game" disabled>🔄 Jogar Novamente</button>
+            <button class="btn btn-secondary" id="reset-game" disabled>🔄 Reiniciar </button>
         </div>
 
         <div id="game-status"></div>
         <div id="sequence-display"></div>
         <div id="result-message"></div>
 
-        <div class="expandable">
-            <div class="expandable-header" onclick="toggleExpand('how-to-play')">
-                Como jogar
-            </div>
-            <div class="expandable-content" id="how-to-play">
-                <strong>1. Escolha seu padrão:</strong> Clique em uma das sequências de 3 resultados<br><br>
-                <strong>2. O computador, seu adversário, escolhe automaticamente</strong> outro padrão usando uma estratégia<br><br>
-                <strong>3. Clique em "🎲 Iniciar Jogo"</strong> e as moedas serão lançadas automaticamente<br><br>
-                <strong>4. Use "🔄 Jogar Novamente"</strong> para uma nova partida<br><br>
-                <strong>5. O jogo para automaticamente</strong> quando um dos padrões aparecer primeiro nos últimos 3 lançamentos<br><br>
-                <strong>5. Vence quem conseguir</strong> que sua sequência apareça primeiro!<br><br>
-                <strong>💡</strong> O adversário usa uma estratégia que lhe dá vantagem estatística!
-            </div>
-        </div>
-
-        <div class="expandable">
+<div class="expandable">
             <div class="expandable-header" onclick="toggleExpand('strategy')">
                 Estratégia do adversário
             </div>
             <div class="expandable-content" id="strategy">
+	      <strong>💡</strong> O adversário usa uma estratégia que lhe dá vantagem estatística!<br><br>
+
+	      <strong>Intuição:</strong> <br>
+
+	      Suponha que o primeiro jogador escolha ABC (A,B,C ∈ {c,k})<br><br>
+
+	      Se a sequência ABC do primeiro jogador aparecer nos três primeiros lançamentos, ele vence imediatamente.<br>
+
+	      Exceto por isso, se AB ocorrer há uma boa chance do
+	      primeiro jogador ganhar, o segundo jogador antecipa
+	      escolhendo AB como sufixo da sua escolha. De fato, o
+	      segundo jogador deve escolher (-B)</span>AB.  (-B é o
+	      oposto de B). O famoso matemático John Conway propôs um
+	      belo <a href="conway.html">algoritmo</a> para esse
+	      jogo. <br>  <br> 
+	       	      
+Por exemplo, para a escolha de <strong>ckc</strong> as probabilidades de vitória do adversário são:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Escolha do adversário  </th>
+        <th>probabilidade de  vitória do adversário</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>ccc</td><td class="right">1/2</td></tr>
+      <tr><td>cck</td><td class="right">2/3</td></tr>
+      <tr><td>ckk</td><td class="right">2/3</td></tr>
+      <tr><td>kcc</td><td class="right">1/3</td></tr>
+      <tr><td>kck</td><td class="right">1/3</td></tr>
+      <tr><td>kkc</td><td class="right">1/3</td></tr>
+      <tr><td>kkk</td><td class="right">1/2</td></tr>
+    </tbody>
+  </table>
+    
+
+<strong>Estratégia:</strong> <br>
                 O adversário usa a seguinte estratégia baseada em probabilidades:<br><br>
-                <table>
-                    <tr>
-                        <th>Seu Padrão</th>
-                        <th>Escolha do Adversário</th>
-                    </tr>
-                    <tr><td>ccc</td><td>kcc</td></tr>
-                    <tr><td>cck</td><td>kcc</td></tr>
-                    <tr><td>ckc</td><td>cck</td></tr>
-                    <tr><td>ckk</td><td>cck</td></tr>
-                    <tr><td>kcc</td><td>kkc</td></tr>
-                    <tr><td>kck</td><td>kkc</td></tr>
-                    <tr><td>kkc</td><td>ckk</td></tr>
-                    <tr><td>kkk</td><td>ckk</td></tr>
-                </table>
-                Esta estratégia não é aleatória - ela maximiza as chances do adversário vencer baseada em análise probabilística!<br><br>
-                <strong>Veja as demonstração aqui</strong> 
-                <a href="https://arxiv.org/pdf/1406.2212" target="_blank">[1]</a>, 
-                <a href="http://mat.puc-rio.br/~nicolau/publ/papers/otario.pdf" target="_blank">[2]</a>
+<table>
+  <thead>
+    <tr>
+      <th>Sua escolha</th>
+      <th>Escolha do adversário </th>
+      <th>Probabilidade de vitória do adversário</th>
+    </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ccc</td>
+                <td>kcc</td>
+                <td>7/8</td>
+            </tr>
+            <tr>
+                <td>cck</td>
+                <td>kcc</td>
+                <td>3/4</td>
+            </tr>
+            <tr>
+                <td>ckc</td>
+                <td>cck</td>
+                <td>2/3</td>
+            </tr>
+            <tr>
+                <td>ckk</td>
+                <td>cck</td>
+                <td>2/3</td>
+            </tr>
+            <tr>
+                <td>kcc</td>
+                <td>kkc</td>
+                <td>2/3</td>
+            </tr>
+            <tr>
+                <td>kck</td>
+                <td>kkc</td>
+                <td>2/3</td>
+            </tr>
+            <tr>
+                <td>kkc</td>
+                <td>ckk</td>
+                <td>3/4</td>
+            </tr>
+            <tr>
+                <td>kkk</td>
+                <td>ckk</td>
+                <td>7/8</td>
+            </tr>
+        </tbody>
+</table>
+<br><br>
+
+                Esta estratégia maximiza as chances do adversário vencer baseada em análise probabilística!<br><br>
+                <strong>Referências</strong> (por ordem de complexidade):
+                <a href="http://mat.puc-rio.br/~nicolau/publ/papers/otario.pdf" target="_blank">[1]</a>,
+                <a href="https://arxiv.org/pdf/1406.2212" target="_blank">[2]</a>, 
+<!--		<a href="https://arxiv.org/pdf/2006.13002" target="_blank">[3]</a>, -->
             </div>
         </div>
 
+	
         <div style="text-align: center; margin: 2rem 0;">
             <strong>Legenda:</strong> 🟡 = Cara (c) | 🔴 = Coroa (k)
         </div>
 
         <div class="footer">
-            Desenvolvido usando HTML, CSS e JavaScript<br>
-            Baseado no problema clássico dos padrões de Penney
         </div>
     </div>
 
@@ -528,44 +613,12 @@
             if (gameState.gameFinished && gameState.winner) {
                 if (gameState.winner === "player") {
                     resultDiv.innerHTML = '<div class="win-message">🎉 Parabéns!</div>';
-                    // Simular balloons effect
-                    setTimeout(() => {
-                        showBalloons();
-                    }, 100);
                 } else {
                     resultDiv.innerHTML = '<div class="lose-message">🤷‍♀️ Tente novamente!</div>';
                 }
             } else {
                 resultDiv.innerHTML = '';
             }
-        }
-
-        function showBalloons() {
-            // Efeito simples de balões
-            const balloons = ['🎈', '🎉', '🎊', '🥳'];
-            let balloonsHtml = '';
-            for (let i = 0; i < 10; i++) {
-                const balloon = balloons[Math.floor(Math.random() * balloons.length)];
-                balloonsHtml += `<span style="position: fixed; top: ${Math.random() * 100}%; left: ${Math.random() * 100}%; font-size: 2em; animation: float 3s ease-in-out; z-index: 1000;">${balloon}</span>`;
-            }
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes float {
-                    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-                    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            const balloonsContainer = document.createElement('div');
-            balloonsContainer.innerHTML = balloonsHtml;
-            document.body.appendChild(balloonsContainer);
-            
-            setTimeout(() => {
-                document.body.removeChild(balloonsContainer);
-                document.head.removeChild(style);
-            }, 3000);
         }
 
         async function runGame() {
