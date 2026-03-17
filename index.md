@@ -1,12 +1,20 @@
+**Avisos:** P1 dia 03; [soluções](Solucoes.pdf) de alguns exercícios das listas. [Soluções](p1.pdf) da P1.</br>
+
+P2 dia 01/12; soluções [aqui](Exercícios de Markov 4— respostas.pdf) e [aqui](Exercícios de Markov 5— respostas.pdf) e [aqui](Exercícios de Markov 6— respostas.pdf) de alguns exercícios.  [Soluções da P2](p2.pdf)</br>
+
+**Rec** em 11/12
+
+------
+
 <font size=6px>MCBM022-23 Introdução aos Processos Estocásticos </font>
 
 [**Jair Donadelli**](http://hostel.ufabc.edu.br/~jair.donadelli/)  (sala 546, torre 2, bloco A)						**email** jair.donadelli@ufabc.edu.br
 
 [toc]
 
-Nessa disciplina vamos estudar os conceitos fundamentais de cadeias de Markov em tempo discreto e contínuo, martingales e teoria da renovação, com foco em suas propriedades, aplicações em modelagem e demonstrações teóricas. Calcular probabilidades de transição, retorno e limites, além de resolver e modelar situações-problema envolvendo esses temas.
+Nessa disciplina vamos estudar os conceitos fundamentais de cadeias de Markov em tempo discreto e contínuo, martingais e teoria da renovação, com foco em suas propriedades, aplicações em modelagem e demonstrações teóricas. Calcular probabilidades de transição, retorno e limites, além de resolver e modelar situações-problema envolvendo esses temas.
 
-**onde:** Seg. 21-23h; Qui. 19-21h) na sala A-114-0
+**onde:** Seg. 21-23h; Qui. 19-21h na sala A-114-0
 
 **TPEI** 4-0-0-4 **RECOMENDAÇÃO**: Álgebra Linear; Cálculo de Probabilidade 
 
@@ -34,7 +42,7 @@ RESNICK, Sidney I. *Adventures in stochastic processes*. Boston: Birkhäuser, 19
 
 **MATERIAL BIBLIOGRÁFICO COMPLEMENTAR** 
 
-[Probability, Mathematical Statistics, Stochastic Processes](https://www.randomservices.org/random/)
+[Probability, Mathematical Statistics, Stochastic Processes](https://www.randomservices.org/random/index.html)
 
 [Finite Markov Chains and Algorithmic Applications](https://cms.dm.uba.ar/academico/materias/verano2018/probabilidades_y_estadistica_C/Haggstrom-Finite%20Markov%20chains%20and%20algorithm%20applications.pdf)
 
@@ -42,23 +50,23 @@ RESNICK, Sidney I. *Adventures in stochastic processes*. Boston: Birkhäuser, 19
 
 [Brownian Motion](https://www.mi.uni-koeln.de/~moerters/book/book.pdf)
 
-## **Cronograma** **(tentativa)**
+## **Cronograma das aulas**
 
-| Semana e Tema                                                | Objetivos                                                    | Tópicos                                                      | Referências                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Semana 1**                                                 | - Apresentação da disciplina<br/>- Compreender o conceito de processo estocástico. | - Plano de ensino <br/> - Conceitos de Probabilidade<br/>- Espaço de estados, tempo discreto vs. contínuo. | [Lista revisão de probabilidade](ExercíciosDeRevisão.html)   |
-| **Semana 2 – Introdução a Processos Estocásticos e Cadeias de Markov Discretas** | - Definir formalmente cadeia de Markov em tempo discreto.<br>- Representar cadeias por matrizes de transição. | - Propriedade de Markov e homogeneidade no tempo.<br>- Matriz de transição $P$, distribuição inicial e evolução $\pi^{(n)} = \pi^{(0)} P^n$. | Ross, Cap. 4.1–4.2.<br>G&S (Grimmet & Stirzaker), Cap. 6.1–6.2. |
-| **Semana 3 – Classificação de Estados e Passeios Aleatórios** | - Classificar estados: acessibilidade, comunicação, absorção.<br>- Estudar passeios aleatórios como exemplo central. | - Acessibilidade, comunicação, classes fechadas, estados absorventes.<br>- Periodicidade e aperiocidade.<br>- Passeio aleatório simples em $\mathbb{Z}$ e ciclos finitos. | Ross, Cap. 4.3.<br>G&S, Cap. 6.3–6.5.                        |
-| **Semana 4 – Distribuições Invariantes e Convergência**      | - Calcular distribuições estacionárias.<br>- Entender condições para existência e unicidade.<br>- Estudar convergência em cadeias finitas. | - Definição: $\pi P = \pi$.<br>- Cadeias irreducíveis e aperiódicas.<br>- Teorema ergódico (caso finito). | Ross, Cap. 4.4.<br>G&S, Cap. 6.6–6.8.                        |
-| **Semana 5 – Processos de Ramificação**                      | - Definir e analisar processo de Galton–Watson.<br>- Usar funções geradoras para probabilidade de extinção. | - Definição e árvore de descendência.<br>- Funções geradoras; regimes subcrítico, crítico e supercrítico. | Ross, Cap. 4.7.<br>G&S, Cap. 6.9.                            |
-| **Semana 6 – Processos de Poisson**                          | - Definir e caracterizar processo de Poisson.<br>- Relacionar chegadas com tempos exponenciais. | - Incrementos independentes e estacionários.<br>- Distribuição de contagem (Poisson).<br>- Distribuição de tempos (exponencial).<br>- Superposição e divisão. | Ross, Cap. 5.1–5.3.<br>G&S, Cap. 6.10.                       |
-| **Semana 7** (feriado na 2ª)                                 | **Prova 1**                                                  | *Conteúdo até teorema ergódico*                              |                                                              |
-| **Semana 8 – Cadeias de Markov em Tempo Contínuo**           | - Introduzir cadeias de Markov em tempo contínuo.<br>- Entender matriz geradora $Q$ e equações de Kolmogorov. | - Definição; taxas de transição.<br>- Equações de Kolmogorov (direita e esquerda).<br>- Processos de nascimento e morte. | Ross, Cap. 6.1–6.4.<br>G&S, Cap. 6.11.                       |
-| **Semana 9 – Martingales**                                   | - Definir martingais em tempo discreto.<br>- Estudar propriedades básicas e exemplos. | - Martingal, sub e supermartingal.<br>- Propriedades básicas.<br>- Teorema de parada opcional (forma simples). | Ross, Cap. 13.1–13.3.<br>G&S, Cap. 12.                       |
-| **Semana 10 -  Introdução ao Movimento Browniano**(feriado na 5ª) | - Definir movimento browniano e propriedades básicas.<br>- Relacionar com passeios aleatórios como limite difusivo. | - Incrementos independentes e gaussianos.<br>- Continuidade de trajetória.<br>- Aproximação via passeio aleatório escalonado. | Ross, Cap. 10.1–10.3.<br>G&S, Cap. 13.                       |
-| **Semana 11– Introdução ao Movimento Browniano**             | idem                                                         | idem                                                         | idem                                                         |
-| **Semana 12 –**                                              | **Prova 2** e **Sub**                                        |                                                              |                                                              |
-| **Semana de reposição**                                      | **Atendimento e Exame de recuperação**                       | Todo conteúdo                                                |                                                              |
+| Semana e Tema                                                | Tópicos                                                      | Referências e xercícios                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Semana 1 – Introdução a Processos Estocásticos**           | - Plano de ensino <br/> - Conceitos de Probabilidade<br/>- Espaço de estados, tempo discreto vs. contínuo. | - [Lista revisão de probabilidade](ExerciciosDeRevisao.html)<br>- [slide](semana01.pdf) |
+| **Semana 2 – Introdução a Cadeias de Markov Discretas**      | - Propriedade de Markov e homogeneidade no tempo.<br>- Matriz de transição $P$, distribuição inicial e evolução $\pi^{(n)} = \pi^{(0)} P^n$. | Ross, 4.1–4.2.<br>G&S (Grimmet & Stirzaker), Cap. 6.1–6.2.<br/>- [gerador de lero-lero](https://lero-markov-lero.streamlit.app/)<br/>- [Exercícios](ExerciciosMarkov.html) |
+| **Semana 3 –  Análise de primeiro passo. Propriedade Forte de Markov. Classificação de estados.** | - Análise de primeiro passo. <br/>- Recorrência e transiência. <br/>- Estados absorventes. Probabilidade e tempo médio de absorção. | Ross, 4.2–4.3.<br>G&S, Cap. 6.1.<br/>- [Exercícios](ExerciciosMarkov2.html) <br/>- [Propriedade Forte de Markov](CFM.pdf) |
+| **Semana 4 – Classificação de Estados e Cadeias. **          | -  Propriedade Forte de Markov.<br/>- Tempo de primeira passagem e caracterização de recorrência e transiência. <br/> | Ross, Cap. 4.3–4.4.<br>G&S, Cap. 6.2–6.3.<br/>- [Exercícios](ExerciciosMarkov3.html) <br/> |
+| **Semana 5 – Distribuições Invariantes**                     | - Conjuntos fechados. Classes de comunicação.<br/>- Distribuição limite e distribuição estacionária.<br/>- Cadeias irredutiveis | Ross, Cap. 4.4.<br>G&S, Cap. 6.4.<br/>- [Exercícios](ExerciciosMarkov4.html) <br/> |
+| **Semana 6 – Distribuições Invariantes e Convergência**      | - Cadeias aperiódicas.<br/>- Teorema ergódico (caso finito). | Idem<br/>[Teorema ergódico](ergodico.pdf)                    |
+| **Semana 7** (feriado na 2ª)                                 | Aula de exercícios                                           |                                                              |
+| **Semana 8 **                                                | - Prova 1 <br/>-  Cont. Teorema ergódico                     |                                                              |
+| **Semana 9 – Exemplos. Tempo de Mistura**                    | - tempo de mistura <br/>- embaralhamento<br/>- Page rank     | Notas de aula/slides: [Embaralhamento](rf.pdf) </br>[PageRank](pagerank.pdf)</br>[Exercícios](ExerciciosMarkov5.html) |
+| **Semana 10 – Martingais discretos**                         | - Martingal.<br/>- Propriedades básicas.<br/>- Teorema de parada opcional (forma simples). | Ross, Cap. 13.1–13.3.<br/>G&S, Cap. 12.1–12.4.<br/>- [Exercícios](ExerciciosMarkov6.html) <br/> |
+| **Semana 11 – Martingais discretos**                         | idem                                                         | idem<br/>[teorema da Urna ou teorema do Escrutíno (*Ballot*)](ballot.pdf) |
+| **Semana 12 –** **Avaliação**                                | *Conteúdo a partir da P1*</br>                               |                                                              |
+| **Semana de reposição - Recuperação**                        | Todo conteúdo                                                |                                                              |
 
 
 
@@ -70,13 +78,15 @@ RESNICK, Sidney I. *Adventures in stochastic processes*. Boston: Birkhäuser, 19
 
 ### Substitutiva e Recuperação
 
-A sub é aberta a qualquer aluno.
+A **sub é aberta** a qualquer aluno. Será aplicada no último dia de aula do calendário regular. O aluno deve manifestar interesse em fazer a sub de acordo com as instruções que serão enviadas por email em momento apropriado durante o curso da disciplina.
 
 Tem direito ao exame recuperação aqueles que foram aprovado com D ou reprovado com F e obtiveram frequência mínima.  O resultado do exame é um conceito que compõe com o conceito final **M** obtido na avaliação regular da disciplina como segue:
 
 ![image-20230203090019550](./image-20230203090019550.png)
 
 O aluno deve manifestar interesse em fazer a recuperação de acordo com as instruções que serão enviadas por email em momento apropriado durante o curso da disciplina.
+
+Exame de recuperação em 11/12, 5ª feira, na sala e horário usuais.
 
 ## **Atendimento**
 
