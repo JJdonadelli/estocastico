@@ -255,9 +255,9 @@ st.markdown("---")
 st.info("""
 💡 **Sobre o PageRank:**
 
-O [PageRank](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf) é um algoritmo usado pelo Google para classificar páginas da web. 
-Ele funciona modelando o comportamento de um navegador aleatório que clica em links 
-com probabilidade α ou salta para uma página aleatória com probabilidade (1-α).
+O [PageRank](http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf) é o primeiro algoritmo usado pelo Google para classificar páginas da web. 
+Ele funciona modelando o comportamento de um "navegante" aleatório pela web que, com probabilidade  α, clica aleatoriamente em um link da página web em que se encontra 
+ou, com probabilidade (1-α), salta para qualquer página aleatória de toda web.
 
 """)
 
